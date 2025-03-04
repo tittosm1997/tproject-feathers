@@ -1,6 +1,6 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
-import { resolve, getValidator, querySyntax } from '@feathersjs/schema'
-import { dataValidator, queryValidator } from '../../validators.js'
+import { resolve, getValidator, querySyntax } from '@feathersjs/schema';
+import { dataValidator, queryValidator } from '../../validators.js';
 
 // Main data model schema
 export const profilesSchema = {
@@ -18,11 +18,11 @@ export const profilesSchema = {
     createdAt:{ type: 'string' },
     updatedAt: { type: 'string' }
   }
-}
-export const profilesValidator = getValidator(profilesSchema, dataValidator)
-export const profilesResolver = resolve({})
+};
+export const profilesValidator = getValidator(profilesSchema, dataValidator);
+export const profilesResolver = resolve({});
 
-export const profilesExternalResolver = resolve({})
+export const profilesExternalResolver = resolve({});
 
 // Schema for creating new data
 export const profilesDataSchema = {
@@ -33,9 +33,9 @@ export const profilesDataSchema = {
   properties: {
     ...profilesSchema.properties
   }
-}
-export const profilesDataValidator = getValidator(profilesDataSchema, dataValidator)
-export const profilesDataResolver = resolve({})
+};
+export const profilesDataValidator = getValidator(profilesDataSchema, dataValidator);
+export const profilesDataResolver = resolve({});
 
 // Schema for updating existing data
 export const profilesPatchSchema = {
@@ -46,9 +46,9 @@ export const profilesPatchSchema = {
   properties: {
     ...profilesSchema.properties
   }
-}
-export const profilesPatchValidator = getValidator(profilesPatchSchema, dataValidator)
-export const profilesPatchResolver = resolve({})
+};
+export const profilesPatchValidator = getValidator(profilesPatchSchema, dataValidator);
+export const profilesPatchResolver = resolve({});
 
 // Schema for allowed query properties
 export const profilesQuerySchema = {
@@ -58,6 +58,6 @@ export const profilesQuerySchema = {
   properties: {
     ...querySyntax(profilesSchema.properties)
   }
-}
-export const profilesQueryValidator = getValidator(profilesQuerySchema, queryValidator)
-export const profilesQueryResolver = resolve({})
+};
+export const profilesQueryValidator = getValidator(profilesQuerySchema, queryValidator);
+export const profilesQueryResolver = resolve({});

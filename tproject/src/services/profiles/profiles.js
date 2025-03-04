@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from '@feathersjs/authentication'
+import { authenticate } from '@feathersjs/authentication';
 
-import { hooks as schemaHooks } from '@feathersjs/schema'
+import { hooks as schemaHooks } from '@feathersjs/schema';
 import {
   profilesDataValidator,
   profilesPatchValidator,
@@ -11,31 +11,31 @@ import {
   profilesDataResolver,
   profilesPatchResolver,
   profilesQueryResolver
-} from './profiles.schema.js'
-import { ProfilesService, getOptions } from './profiles.class.js'
-import { profilesPath, profilesMethods } from './profiles.shared.js'
+} from './profiles.schema.js';
+import { ProfilesService, getOptions } from './profiles.class.js';
+import { profilesPath, profilesMethods } from './profiles.shared.js';
 
-export * from './profiles.class.js'
-export * from './profiles.schema.js'
+export * from './profiles.class.js';
+export * from './profiles.schema.js';
 
-import crypto from 'crypto'
-import mongoose from 'mongoose'
-import multer from 'multer'
-import GridFsStorage from 'multer-gridfs-storage'
+import crypto from 'crypto';
+import mongoose from 'mongoose';
+import multer from 'multer';
+import GridFsStorage from 'multer-gridfs-storage';
 import path from 'path';
-import Grid from 'gridfs-stream'
-import { MongoClient, GridFSBucket } from 'mongodb'
+import Grid from 'gridfs-stream';
+import { MongoClient, GridFSBucket } from 'mongodb';
 import jwt from 'jsonwebtoken';
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const profiles = app => {
+export const profiles = (app) => {
   // Register our service on the Feathers application
   app.use(profilesPath, new ProfilesService(getOptions(app)), {
     // A list of all methods this service exposes externally
     methods: profilesMethods,
     // You can add additional custom events to be sent to clients here
     events: []
-  })
+  });
   // Initialize hooks
   app.service(profilesPath).hooks({
     around: {
@@ -68,7 +68,7 @@ export const profiles = app => {
     error: {
       all: []
     }
-  })
+  });
 
 
   // MongoDB and Postgres setup
@@ -107,13 +107,13 @@ export const profiles = app => {
           if (err) {
             return reject(err);
           }
-          const filename = buf.toString("hex") + path.extname(file.originalname);
+          const filename = buf.toString('hex') + path.extname(file.originalname);
           const fileInfo = {
             filename: filename,
-            bucketName: "tprojectprofile"
+            bucketName: 'tprojectprofile'
           };
 
-          const token = req.headers && req.headers.authorization && req.headers.authorization.replace('Bearer ', '')
+          const token = req.headers && req.headers.authorization && req.headers.authorization.replace('Bearer ', '');
 
           const decoded = jwt.decode(token, { complete: true });
           if (decoded.payload.sub) {
@@ -126,10 +126,10 @@ export const profiles = app => {
           console.log('user id', decoded.payload.sub);
 
 
-          const customquery = `UPDATE profiles SET "profileImage"= '${fileInfo.filename}' WHERE "userId"= ${decoded.payload.sub}`
-          const knex = app.get('postgresqlClient')
+          const customquery = `UPDATE profiles SET "profileImage"= '${fileInfo.filename}' WHERE "userId"= ${decoded.payload.sub}`;
+          const knex = app.get('postgresqlClient');
           // console.log(knex);
-          knex.raw(customquery).then((result) => {
+          knex.raw(customquery).then(() => {
           });
 
           try {
@@ -149,12 +149,12 @@ export const profiles = app => {
     storage
   });
 
-  app.post('/mongo-uploads', upload.single("file"), (req, res) => {
+  app.post('/mongo-uploads', upload.single('file'), (req, res) => {
 
     return res.status(200).json({
-      success: "Successfully uploaded"
+      success: 'Successfully uploaded'
 
-    })
+    });
 
   });
   const findFileByFilename = async (filename) => {
@@ -179,7 +179,7 @@ export const profiles = app => {
   };
 
 
-  app.get("/mongo-files/:filename", async (req, res) => {
+  app.get('/mongo-files/:filename', async (req, res) => {
     const { filename } = req.params;
 
     try {
@@ -211,10 +211,11 @@ export const profiles = app => {
         readstream.pipe(res).on('finish', () => {
           return new Promise((resolve, reject) => {
             const chunks = [];
-            readstream.on('data', chunk => chunks.push(chunk));
+            readstream.on('data', (chunk) => chunks.push(chunk));
+            // eslint-disable-next-line no-undef
             readstream.on('end', () => resolve(Buffer.concat(chunks)));
-            readstream.on('error', error => {
-              console.error(`Error while downloading file with ID ${id}: ${error.message}`);
+            readstream.on('error', (error) => {
+              console.error(`Error while downloading file with ID ${error.message}`);
               reject(error);
             });
           });
@@ -233,13 +234,13 @@ export const profiles = app => {
 
   });
 
-  app.post("/mongo-files/del/:id", async (req, res) => {
+  app.post('/mongo-files/del/:id', async (req, res) => {
     try {
       const file = await gfs.files.findOne({ filename: req.params.id });
-  
+
       if (file) {
         await bucket.delete(file._id);
-          const token = req.headers.authorization && req.headers.authorization.replace('Bearer ', '');
+        const token = req.headers.authorization && req.headers.authorization.replace('Bearer ', '');
         if (!token) {
           return res.status(401).send('Authorization token is required.');
         }
@@ -250,16 +251,16 @@ export const profiles = app => {
         const userId = decoded.payload.sub;
         const knex = app.get('postgresqlClient');
         const customquery = `UPDATE profiles SET "profileImage" = '' WHERE "userId" = ${userId}`;
-        await knex.raw(customquery);  
-  
+        await knex.raw(customquery);
+
         res.status(200).send('Deleted successfully');
       } else {
         res.status(404).send('No file found');
       }
     } catch (err) {
-      console.error("Error:", err);  // Log error for debugging
+      console.error('Error:', err);  // Log error for debugging
       res.status(500).send('Error deleting file: ' + err.message);  // Send error response
     }
   });
 
-}
+};

@@ -1,6 +1,6 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
-import { resolve, getValidator, querySyntax } from '@feathersjs/schema'
-import { dataValidator, queryValidator } from '../../validators.js'
+import { resolve, getValidator, querySyntax } from '@feathersjs/schema';
+import { dataValidator, queryValidator } from '../../validators.js';
 
 // Main data model schema
 export const usertypeSchema = {
@@ -14,11 +14,11 @@ export const usertypeSchema = {
     createdAt:{ type: 'string' },
     updatedAt: { type: 'string' }
   }
-}
-export const usertypeValidator = getValidator(usertypeSchema, dataValidator)
-export const usertypeResolver = resolve({})
+};
+export const usertypeValidator = getValidator(usertypeSchema, dataValidator);
+export const usertypeResolver = resolve({});
 
-export const usertypeExternalResolver = resolve({})
+export const usertypeExternalResolver = resolve({});
 
 // Schema for creating new data
 export const usertypeDataSchema = {
@@ -29,9 +29,9 @@ export const usertypeDataSchema = {
   properties: {
     ...usertypeSchema.properties
   }
-}
-export const usertypeDataValidator = getValidator(usertypeDataSchema, dataValidator)
-export const usertypeDataResolver = resolve({})
+};
+export const usertypeDataValidator = getValidator(usertypeDataSchema, dataValidator);
+export const usertypeDataResolver = resolve({});
 
 // Schema for updating existing data
 export const usertypePatchSchema = {
@@ -42,9 +42,9 @@ export const usertypePatchSchema = {
   properties: {
     ...usertypeSchema.properties
   }
-}
-export const usertypePatchValidator = getValidator(usertypePatchSchema, dataValidator)
-export const usertypePatchResolver = resolve({})
+};
+export const usertypePatchValidator = getValidator(usertypePatchSchema, dataValidator);
+export const usertypePatchResolver = resolve({});
 
 // Schema for allowed query properties
 export const usertypeQuerySchema = {
@@ -54,6 +54,6 @@ export const usertypeQuerySchema = {
   properties: {
     ...querySyntax(usertypeSchema.properties)
   }
-}
-export const usertypeQueryValidator = getValidator(usertypeQuerySchema, queryValidator)
-export const usertypeQueryResolver = resolve({})
+};
+export const usertypeQueryValidator = getValidator(usertypeQuerySchema, queryValidator);
+export const usertypeQueryResolver = resolve({});

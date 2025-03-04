@@ -1,9 +1,9 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { UploadsService, getOptions } from './uploads.class.js'
-import { uploadsPath, uploadsMethods } from './uploads.shared.js'
+import { UploadsService, getOptions } from './uploads.class.js';
+import { uploadsPath, uploadsMethods } from './uploads.shared.js';
 
-export * from './uploads.class.js'
-export * from './uploads.schema.js'
+export * from './uploads.class.js';
+export * from './uploads.schema.js';
 
 import multer from 'multer';
 import path from 'path';
@@ -17,16 +17,17 @@ export const uploads = app => {
     methods: uploadsMethods,
     // You can add additional custom events to be sent to clients here
     events: []
-  })
+  });
 
 // Folder Uploads
 
   app.use('/finduploads/:file', (req, res) => {
 
     if (req.method === 'GET') {
-      const __dirname = process.cwd()
+      // eslint-disable-next-line no-undef
+      const __dirname = process.cwd();
       const UPLOADS_FOLDER = `${path.join(__dirname, '/public/bg_uploads')}`;
-      const id = req.params.file
+      const id = req.params.file;
       if (!id) {
         return res.status(400).send({ success: false, message: 'File ID is required' });
       }
@@ -38,6 +39,7 @@ export const uploads = app => {
         }
       });
       if (FileUrl) {
+        // eslint-disable-next-line no-undef
         res.send({ success: true, message: 'FileUrl URL found', url: `${process.env.BASE_API_URL}${FileUrl}` });
       } else {
         res.send({ success: true, message: 'File Not found', url: null });
@@ -49,11 +51,12 @@ export const uploads = app => {
         'message': 'Page not found',
         'code': 404,
         'className': 'not-found'
-      })
+      });
     }
-  })
+  });
 
   //Upload starts
+  // eslint-disable-next-line no-undef
   const __dirname = process.cwd();
 
   // Configure Multer to save uploaded files in the 'uploads' folder
@@ -78,17 +81,19 @@ export const uploads = app => {
       .then(payload => {
 
         // Token is valid, proceed to next middleware (Multer)
-        let customquery = ''
+        let customquery = '';
         if (req.method == 'DELETE') {
-          customquery = `UPDATE profiles SET "profileImage"= '' WHERE "userId"= ${payload.sub}`
-          const knex = app.get('postgresqlClient')
-          knex.raw(customquery).then((result) => {
+          customquery = `UPDATE profiles SET "profileImage"= '' WHERE "userId"= ${payload.sub}`;
+          const knex = app.get('postgresqlClient');
+          knex.raw(customquery).then(() => {
           });
         } 
         req.userid = payload.sub; 
         next();
       })
       .catch(error => {
+        console.log(error);
+        
         // Invalid or expired token
         res.status(401).send({ error: 'Invalid or expired token' });
       });
@@ -101,10 +106,10 @@ export const uploads = app => {
       return res.status(400).send('No file uploaded');
     }
 
-    let customquery = `UPDATE profiles SET "profileImage"= '${req.file.originalname}' WHERE "userId"= ${req.userid}`
+    let customquery = `UPDATE profiles SET "profileImage"= '${req.file.originalname}' WHERE "userId"= ${req.userid}`;
 
-    const knex = app.get('postgresqlClient')
-    knex.raw(customquery).then((result) => {
+    const knex = app.get('postgresqlClient');
+    knex.raw(customquery).then(() => {
     });
 
     res.send({ 'Success': 'File uploaded successfully' });
@@ -133,4 +138,4 @@ export const uploads = app => {
   });
 
 
-}
+};

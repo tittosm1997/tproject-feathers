@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
-import { authenticate } from '@feathersjs/authentication'
+import { authenticate } from '@feathersjs/authentication';
 
-import { hooks as schemaHooks } from '@feathersjs/schema'
+import { hooks as schemaHooks } from '@feathersjs/schema';
 import {
   usersDataValidator,
   usersPatchValidator,
@@ -11,12 +11,12 @@ import {
   usersDataResolver,
   usersPatchResolver,
   usersQueryResolver
-} from './users.schema.js'
-import { UsersService, getOptions } from './users.class.js'
-import { usersPath, usersMethods } from './users.shared.js'
+} from './users.schema.js';
+import { UsersService, getOptions } from './users.class.js';
+import { usersPath, usersMethods } from './users.shared.js';
 
-export * from './users.class.js'
-export * from './users.schema.js'
+export * from './users.class.js';
+export * from './users.schema.js';
 
 // A configure function that registers the service and its hooks via `app.configure`
 export const users = app => {
@@ -26,7 +26,7 @@ export const users = app => {
     methods: usersMethods,
     // You can add additional custom events to be sent to clients here
     events: []
-  })
+  });
   // Initialize hooks
   app.service(usersPath).hooks({
     around: {
@@ -52,5 +52,5 @@ export const users = app => {
     error: {
       all: []
     }
-  })
-}
+  });
+};
