@@ -1,0 +1,83 @@
+{
+  "name": "tproject",
+  "description": "tproject",
+  "version": "0.0.0",
+  "homepage": "",
+  "private": true,
+  "keywords": [
+    "feathers"
+  ],
+  "author": {},
+  "contributors": [],
+  "bugs": {},
+  "engines": {
+    "node": ">= 18.13.0"
+  },
+  "feathers": {
+    "language": "js",
+    "packager": "npm",
+    "database": "postgresql",
+    "framework": "express",
+    "transports": [
+      "rest",
+      "websockets"
+    ],
+    "schema": "json"
+  },
+  "directories": {
+    "lib": "src",
+    "test": "test"
+  },
+  "files": [
+    "lib/client.js",
+    "lib/**/*.d.ts",
+    "lib/**/*.shared.js"
+  ],
+  "main": "src/client",
+  "type": "module",
+  "scripts": {
+    "start": "node src",
+    "dev": "nodemon src/",
+    "prettier": "npx prettier \"**/*.js\" --write",
+    "mocha": "cross-env NODE_ENV=test mocha test/ --recursive --exit",
+    "test": "cross-env NODE_ENV=test npm run migrate && npm run mocha",
+    "bundle:client": "npm pack --pack-destination ./public",
+    "migrate": "knex migrate:latest",
+    "migrate:make": "knex migrate:make -x mjs"
+  },
+  "dependencies": {
+    "@feathersjs/adapter-commons": "^5.0.33",
+    "@feathersjs/authentication": "^5.0.33",
+    "@feathersjs/authentication-client": "^5.0.33",
+    "@feathersjs/authentication-local": "^5.0.33",
+    "@feathersjs/authentication-oauth": "^5.0.33",
+    "@feathersjs/configuration": "^5.0.33",
+    "@feathersjs/errors": "^5.0.33",
+    "@feathersjs/express": "^5.0.33",
+    "@feathersjs/feathers": "^5.0.33",
+    "@feathersjs/knex": "^5.0.33",
+    "@feathersjs/mongodb": "^5.0.33",
+    "@feathersjs/schema": "^5.0.33",
+    "@feathersjs/socketio": "^5.0.33",
+    "@feathersjs/transport-commons": "^5.0.33",
+    "compression": "^1.8.0",
+    "dotenv": "^16.4.7",
+    "gridfs-stream": "^1.1.1",
+    "knex": "^3.1.0",
+    "mongodb": "^5.9.1",
+    "mongoose": "^8.11.0",
+    "multer": "^1.4.5-lts.1",
+    "multer-gridfs-storage": "^5.0.2",
+    "pg": "^8.13.3",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@feathersjs/cli": "^5.0.33",
+    "@feathersjs/rest-client": "^5.0.33",
+    "axios": "^1.8.1",
+    "cross-env": "^7.0.3",
+    "mocha": "^11.1.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.2"
+  }
+}
