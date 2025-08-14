@@ -11,7 +11,7 @@
   },
   "postgresql": {
     "client": "pg",
-    "connection": "postgres://tproject:tproject@localhost:5432/tproject"
+    "connection": "postgresql://tproject:6SXJPC6nf8zHOcQUutnO31wAXkrXIxeG@dpg-d2emndmuk2gs73bja6dg-a/tproject"    
   },
   "authentication": {
     "entity": "users",
